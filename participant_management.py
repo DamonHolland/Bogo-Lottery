@@ -28,8 +28,23 @@ def create_next_participants(participant_data: Participants):
         json.dump(participant_data, file, indent=4)
 
 
-def participant_summary(participant_data: Participants):
-    print("".center(50, "-"))
-    for name, pity in participant_data.items():
-        print(f"{name}: {pity}")
-    print("".center(50, "-"))
+def participant_summary(participant_data: dict):
+    print("-" * 50)
+    total_entries = sum(participant_data.values())
+    print(f"{'Participant Odds Summary':^50}")
+    print("-" * 50)
+    print(f"{'Name':<20} | {'Entries':<10} | {'Odds (%)':<10}")
+    print("-" * 50)
+
+    participants = []
+    for name, entries in participant_data.items():
+        odds = round((entries / total_entries) * 100, 2) if total_entries else 0
+        participants.append((name, entries, odds))
+    participants.sort(key=lambda x: x[2], reverse=True)
+
+    for name, entries, odds in participants:
+        print(f"{name:<20} | {entries:<10} | {odds:<10.2f}")
+
+    print("-" * 50)
+    print(f"{'Total entries:':<20} {total_entries}")
+    print("-" * 50)

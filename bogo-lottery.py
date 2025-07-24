@@ -12,6 +12,10 @@ def main():
     participant_data = increment_pity(participant_data, winner)
     create_next_participants(participant_data)
 
+    print("Info for next pull!")
+    participant_data = get_participants()
+    participant_summary(participant_data)
+
 
 if __name__ == '__main__':
     main()
